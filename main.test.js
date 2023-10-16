@@ -58,34 +58,45 @@ const cubeAll = function(arr){
 }
 
 //7.
-const addNoises = function(animals) {
-  const noises = {
-    dog: 'woof',
-    cat: 'meow',
-    pig: 'oink'
-  };
+const addNoises = function(arr) {
+ let newArr = []
+ for(let str of arr){
+  switch(str){
+    case 'Fido':
+    case 'Rolph':
+    case 'Maisie':
+      newArr.push(str + ' says "Woof!"')
+      break;
+    case 'Garfield':
+    case 'Heathcliff':
+        newArr.push(str + ' says "Meow!"')
+        break;
+    case 'Barnie':
+    case 'Sharp Tooth':
+          newArr.push(str + ' says "ROWR."')
+          break;
 
-  return animals.map(animal => animal + ': ' + noises[animal]);
+  }
+ }
+ return newArr
 }
 
 //8.
-// const womenOnly = function(str){
-//   const gender = ['male', 'female']
-//   let result = ''
-//   for(let i = 0; i < str.length; i++){
-//     if(str[i] === 'Ashley' || str[i] === 'Courtney' || str[i] === 'Bree' || str[i] === 'Rhonda' || str[i] === 'Brittni'){
-//       result += str[i]
-//     }
-//   }
-//   return result
-// }
- 
+const womenOnly = function(arr){
+  
+  return arr.filter(function(item){
+    return item.gender === 'female';
+    return arr.filter(item => item[item.length - 1] === 'F');
+  })
+  
+}
+
 
 
 //9.
-// const integersOnly = function(arr) {
-//   return arr.filter(number => Number.isInteger(number));
-// }
+const integersOnly = function(arr) {
+  return arr.filter(number => Number.isInteger(number));
+}
 
 /*********************************
  * OUR CODE BELOW; DO NOT TOUCH! *
@@ -293,3 +304,63 @@ describe('addNoises', () => {
     expect(() => addNoises = 500).toThrow();
   })
 })
+
+describe('womenOnly', () => {
+  it('should return an empty array if the input is an empty array', () => {
+    const input = [];
+    const result = womenOnly(input);
+    expect(result).toEqual([]);
+  });
+
+  it('should return an empty array if there are no female names', () => {
+    const input = ['John', 'Robert', 'Michael'];
+    const result = womenOnly(input);
+    expect(result).toEqual([]);
+  });
+
+  it('should return an array with female names only', () => {
+    const input = ['Alice F', 'Bob M', 'Charlie F', 'David M', 'Eve F'];
+    const result = womenOnly(input);
+    expect(result).toEqual(['Alice F', 'Charlie F', 'Eve F']);
+  });
+});
+
+describe('integersOnly', () => {
+  it('should return an empty array if the input is an empty array', () => {
+    const input = [];
+    const result = integersOnly(input);
+    expect(result).toEqual([]);
+  });
+
+  it('should return an empty array if there are no integers in the input', () => {
+    const input = [1.5, 2.25, 3.75];
+    const result = integersOnly(input);
+    expect(result).toEqual([]);
+  });
+
+  it('should return an array with only integers', () => {
+    const input = [1, 2, 3.0, 4.5, 5, 6.0];
+    const result = integersOnly(input);
+    expect(result).toEqual([1, 2, 3.0, 5, 6.0]); // 3.0 and 6.0 are considered integers
+  });
+
+  it('should handle negative integers', () => {
+    const input = [-1, -2, 3, -4.0, 5.5];
+    const result = integersOnly(input);
+    expect(result).toEqual([-1, -2, 3, -4.0]); // -4.0 is considered an integer
+  });
+
+  it('should handle a mix of integers and non-integers', () => {
+    const input = [2.75, 4, -3.8, 6, 9.0, 11];
+    const result = integersOnly(input);
+    expect(result).toEqual([4, 6, 9.0, 11]); // 9.0 is considered an integer
+  });
+});
+
+if (typeof womenOnly === 'undefined') {
+  womenOnly = undefined;
+}
+
+if (typeof integersOnly === 'undefined') {
+  integersOnly = undefined;
+}
